@@ -86,8 +86,7 @@ public class MapController : MonoBehaviour
     {
       case "P":
         Debug.Log("Player");
-        entity = Instantiate(_playerPrefab, new Vector2(x, y), Quaternion.identity);
-        entities[y * 10 + x] = entity;
+        Instantiate(_playerPrefab, new Vector2(x, y), Quaternion.identity);
         break;
       case "e":
         Debug.Log("Enemy");
