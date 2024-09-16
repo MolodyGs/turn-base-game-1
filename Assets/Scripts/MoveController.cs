@@ -34,6 +34,7 @@ public class MoveController : MonoBehaviour
     int y = int.Parse(newPosition.y.ToString());
     if (MapController.Instance.entities[10 * y + x] != null)
     {
+      AttackController.Instance.AttackEntity(MapController.Instance.entities[10 * y + x].GetComponent<Entity>());
       return false;
     }
     return newPosition.x >= 0 && newPosition.x <= 9 && newPosition.y >= 0 && newPosition.y <= 9;

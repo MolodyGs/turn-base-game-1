@@ -5,22 +5,22 @@ public class Entity : MonoBehaviour
 {
 
   private int _health = 100;
-  private int _baseAttack = 10;
-  private string _name;
+  public int baseAttack = 10;
 
-  public Entity(string name, int health, int baseAttack)
+  public Entity()
   {
-    _name = name;
-    _health = health;
-    _baseAttack = baseAttack;
     Debug.Log("Entity constructor");
   }
 
   public bool GetAttack(int damage)
   {
+    Debug.Log(_health);
     _health -= damage;
+    Debug.Log(_health);
+
     if (_health <= 0)
     {
+      Destroy(gameObject);
       return false;
     }
     return true;
