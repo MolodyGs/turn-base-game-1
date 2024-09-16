@@ -29,6 +29,7 @@ public class MapController : MonoBehaviour
   [SerializeField] private GameObject _playerPrefab;
   [SerializeField] private GameObject[] _enemiesPrefab;
   [SerializeField] private GameObject _boxPrefab;
+  [SerializeField] private GameObject _wallPrefab;
   private Entity[] entitiesData;
   private static MapController _instance;
 
@@ -89,6 +90,7 @@ public class MapController : MonoBehaviour
 
   private void LoadMap()
   {
+    LoadWorldEgdes();
     Debug.Log("Loading map...");
 
     string filePath = Application.dataPath + "/Resources/map.csv";
@@ -102,7 +104,7 @@ public class MapController : MonoBehaviour
       {
         _map.Add(tile);
 
-        GameObject tileObj = Instantiate(_tilePrefab, new Vector2(tileXIndex, tileYIndex), Quaternion.identity);
+        GameObject tileObj = Instantiate(_tilePrefab, new Vector3(tileXIndex, tileYIndex, -5), Quaternion.identity);
         tileObj.transform.GetComponent<SpriteRenderer>().sortingOrder = -1;
 
         TileInterpretation(tile, tileXIndex, tileYIndex);
@@ -117,6 +119,20 @@ public class MapController : MonoBehaviour
       {
         entity.transform.GetComponent<Enemy>().ShowData();
       }
+    }
+  }
+
+  private void LoadWorldEgdes()
+  {
+    for (int i = 0; i <= 11; i++)
+    {
+      Instantiate(_wallPrefab, new Vector2(i - 1, -1), Quaternion.identity);
+      Instantiate(_wallPrefab, new Vector2(i - 1, 10), Quaternion.identity);
+    }
+    for (int i = 0; i < 10; i++)
+    {
+      Instantiate(_wallPrefab, new Vector2(-1, i), Quaternion.identity);
+      Instantiate(_wallPrefab, new Vector2(10, i), Quaternion.identity);
     }
   }
 

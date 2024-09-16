@@ -30,13 +30,27 @@ public class MoveController : MonoBehaviour
 
   private bool IsValidMove(Vector2 newPosition)
   {
+
     int x = int.Parse(newPosition.x.ToString());
     int y = int.Parse(newPosition.y.ToString());
+
+    Vector2 rayOrigin = new(transform.position.x, transform.position.y);
+    Vector2 rayDirection = (new Vector2(x, y) - rayOrigin).normalized;
+    Debug.DrawRay(rayOrigin, rayDirection, Color.blue, 5);
+
+    RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, 1);
+    if (hit.collider != null && hit.transform.CompareTag("Wall"))
+    {
+      return false;
+    }
+
+
     if (MapController.Instance.entities[10 * y + x] != null)
     {
       AttackController.Instance.AttackEntity(MapController.Instance.entities[10 * y + x].GetComponent<Entity>());
       return false;
     }
-    return newPosition.x >= 0 && newPosition.x <= 9 && newPosition.y >= 0 && newPosition.y <= 9;
+
+    return true;
   }
 }
