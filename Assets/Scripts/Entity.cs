@@ -1,28 +1,33 @@
 
 using UnityEngine;
-
 public class Entity : MonoBehaviour
 {
+  public int id;
+  public int health;
+  public int baseAttack;
+  public string entityName;
 
-  private int _health = 100;
-  public int baseAttack = 10;
-
-  public Entity()
+  public void Init(int id, int health, int baseAttack, string entityName)
   {
-    Debug.Log("Entity constructor");
+    this.id = id;
+    this.health = health;
+    this.baseAttack = baseAttack;
+    this.entityName = entityName;
   }
-
   public bool GetAttack(int damage)
   {
-    Debug.Log(_health);
-    _health -= damage;
-    Debug.Log(_health);
+    health -= damage;
 
-    if (_health <= 0)
+    if (health <= 0)
     {
       Destroy(gameObject);
       return false;
     }
     return true;
+  }
+
+  public void ShowData()
+  {
+    Debug.Log("Entity: " + entityName + " id: " + id + " health: " + health + " baseAttack: " + baseAttack);
   }
 }

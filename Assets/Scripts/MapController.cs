@@ -2,9 +2,24 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Unity.Collections;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+
+[Serializable]
+public class EntityList
+{
+  public EntityData[] entities;
+}
+
+[Serializable]
+public class EntityData
+{
+  public int id;
+  public int health;
+  public int baseAttack;
+  public string entityName;
+}
 
 public class MapController : MonoBehaviour
 {
@@ -14,7 +29,7 @@ public class MapController : MonoBehaviour
   [SerializeField] private GameObject _playerPrefab;
   [SerializeField] private GameObject[] _enemiesPrefab;
   [SerializeField] private GameObject _boxPrefab;
-
+  private Entity[] entitiesData;
   private static MapController _instance;
 
   public static MapController Instance
@@ -49,7 +64,27 @@ public class MapController : MonoBehaviour
 
   void Start()
   {
+    LoadEntitiesFile();
     LoadMap();
+  }
+
+  private void LoadEntitiesFile()
+  {
+    string filePath = Application.dataPath + "/Resources/entitiesID.json";
+    string data = File.ReadAllText(filePath);
+    EntityList entityList = JsonUtility.FromJson<EntityList>(data);
+    Entity[] entities = new Entity[100];
+    foreach (EntityData entity in entityList.entities)
+    {
+      entities[entity.id] = new()
+      {
+        id = entity.id,
+        health = entity.health,
+        baseAttack = entity.baseAttack,
+        entityName = entity.entityName
+      };
+    }
+    entitiesData = entities;
   }
 
   private void LoadMap()
@@ -76,12 +111,20 @@ public class MapController : MonoBehaviour
       tileXIndex = 0;
       tileYIndex -= 1;
     }
+    foreach (GameObject entity in entities)
+    {
+      if (entity != null)
+      {
+        entity.transform.GetComponent<Enemy>().ShowData();
+      }
+    }
   }
 
   private void TileInterpretation(string tile, int x, int y)
   {
     string[] tileInfo = tile.Split(':');
-    GameObject entity;
+    Entity entityData;
+    GameObject entityObj;
     switch (tileInfo[0])
     {
       case "P":
@@ -89,9 +132,18 @@ public class MapController : MonoBehaviour
         Instantiate(_playerPrefab, new Vector2(x, y), Quaternion.identity);
         break;
       case "e":
-        Debug.Log("Enemy");
-        entity = Instantiate(_enemiesPrefab[int.Parse(tileInfo[2])], new Vector2(x, y), Quaternion.identity);
-        entities[y * 10 + x] = entity;
+        entityData = entitiesData[int.Parse(tileInfo[2])];
+        entityObj = Instantiate(_enemiesPrefab[int.Parse(tileInfo[2])], new Vector2(x, y), Quaternion.identity);
+        entityObj.AddComponent<Enemy>();
+        Enemy enemyComponent = entityObj.GetComponent<Enemy>();
+        if (enemyComponent == null)
+        {
+          Debug.LogError("No se pudo encontrar el componente Enemy en el objeto instanciado.");
+          return;
+        }
+        Debug.Log(entityData);
+        entityObj.GetComponent<Enemy>().Init(entityData.id, entityData.health, entityData.baseAttack, entityData.entityName);
+        entities[y * 10 + x] = entityObj;
         break;
     }
   }
