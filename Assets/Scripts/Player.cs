@@ -35,9 +35,4 @@ public class Player : Entity
       Destroy(gameObject);
     }
   }
-
-  public Player() : base()
-  {
-    Debug.Log("Player constructor");
-  }
 }
