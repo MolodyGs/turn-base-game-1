@@ -410,6 +410,50 @@ MonoBehaviour:
   - {fileID: 6934875463456185162, guid: a2cd5aacb91437f4b84633180b875b8a, type: 3}
   _boxPrefab: {fileID: 7211069613352382739, guid: 8944465465c50a64cb980aa5d34340c4, type: 3}
   _wallPrefab: {fileID: 5116833780474112248, guid: edd2c861710f5724bb8aad46e5819da2, type: 3}
+--- !u!1 &1032683635
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1032683637}
+  - component: {fileID: 1032683636}
+  m_Layer: 0
+  m_Name: TilePointerController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1032683636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032683635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a50075388c4095e4b9f6865ef2f8aaa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1032683637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032683635}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.6966214, y: 4.558406, z: 4.2707047}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -417,3 +461,4 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 552105236}
   - {fileID: 324613855}
+  - {fileID: 1032683637}
