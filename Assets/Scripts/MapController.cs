@@ -103,10 +103,18 @@ public class MapController : MonoBehaviour
       foreach (string tile in tiles)
       {
         _map.Add(tile);
+        GameObject tileObj;
 
-        GameObject tileObj = Instantiate(_tilePrefab, new Vector3(tileXIndex, tileYIndex, -5), Quaternion.identity);
+        if (tile.Equals("/") || tile.Equals("P"))
+        {
+          tileObj = Instantiate(_tilePrefab, new Vector3(tileXIndex, tileYIndex, -5), Quaternion.identity);
+        }
+        else
+        {
+          tileObj = Instantiate(_wallPrefab, new Vector3(tileXIndex, tileYIndex, -5), Quaternion.identity);
+        }
+
         tileObj.transform.GetComponent<SpriteRenderer>().sortingOrder = -1;
-
         TileInterpretation(tile, tileXIndex, tileYIndex);
         tileXIndex += 1;
       }
